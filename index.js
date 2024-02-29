@@ -2,7 +2,6 @@
 import express from "express";
 
 // import the service account correctly: https://stackoverflow.com/a/70106896
-import serviceAccount from "./service_account.json" assert { type: "json" };
 
 // import what's needed for the firebase admin module
 import { initializeApp, cert } from "firebase-admin/app";
