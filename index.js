@@ -8,6 +8,10 @@ import serviceAccount from "./service_account.json" assert { type: "json" };
 import { initializeApp, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 
+import dotenv from "dotenv"
+
+dotenv.config();
+
 // create the express webserver object
 const app = express();
 // declare the port that we will be hosting this on. It'll be accessible on "http://localhost:3000" since we put port number as 3000
@@ -20,7 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // create the firebase application using the service account
 initializeApp({
-    credential: cert(serviceAccount)
+    credential: cert(JSON.parse(process.env.service_account))
 });
 
 // create the firestore database access in the application
@@ -28,7 +32,12 @@ const db = getFirestore();
 
 // create a GET endpoint at the base
 app.get('/', (req, res) => {
-    res.send("Hello World!");
+    res.send(`
+<html>
+    <h1>Hello!</h1>
+    <p>Hi there!</p>
+</html>
+`);
 });
 
 // create a GET endpoint to get the newest data at http://localhost:${port}/newest
